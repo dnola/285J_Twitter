@@ -31,7 +31,7 @@ print(text_tf_idf[0],"\n") # Important note! TF-IDF spits out a sparse matrix by
 # Its just a more concise way of writing it - we leave out all the 0 entries
 # and only spit out the values and their indexes. 
 
-nmf = NMF(n_components=100,verbose=1) # Sure lets compress to 100 topics why not
+nmf = NMF(n_components=100,verbose=1) # Sure lets compress to 100 topics why not...
 # Verbose prints out how close to convergence we are after each iteration
 # When violation is less than .0001 by default, NMF is finished
 
