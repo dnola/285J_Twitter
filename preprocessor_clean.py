@@ -47,6 +47,10 @@ text_tf_idf = tf_idf.fit_transform(clean_text) # like we talked about,
 # fit_transform is short hand for doing a .fit() then a .transform()
 # because 2 lines of code is already too much I guess...
 
+print("Dumping feature names to disk...")
+pickle.dump(tf_idf.get_feature_names(), open('TF_IDF_feature_names.pkl', 'wb'))
+
+
 print("TF-IDF Sample:")
 print(text_tf_idf[0],"\n") # Important note! TF-IDF spits out a sparse matrix by
 # default so don't be shocked when the print statement gives you
