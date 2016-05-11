@@ -42,6 +42,3 @@ print(len(raw_data))
 pickle.dump(raw_data, open('pandas_data.pkl','wb'))
 
 pickle.dump(raw_data['text'].tolist(), open('raw_text_data.pkl','wb'))
-
-# Note from David: This is literally 8 lines of code - Python has killer
-# libraries - try doing this much work in 8 lines of C++ code!

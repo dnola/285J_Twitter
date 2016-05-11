@@ -62,9 +62,11 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # and only spit out the values and their indexes. Its 1D so the first index
     # will always be 0
 
+    # These two are basically interchangable:
     # nmf = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
-    nmf = LatentDirichletAllocation(n_topics=1000,n_jobs=-1,doc_topic_prior=50/1000.0, topic_word_prior=.1, verbose=100,batch_size=int(len(raw_text)/10),max_doc_update_iter=1000,mean_change_tol=.0001,learning_offset=30)
+    topic_model = LatentDirichletAllocation(n_topics=1000,n_jobs=-1,doc_topic_prior=50/1000.0, topic_word_prior=.1, verbose=100,batch_size=int(len(raw_text)/10),max_doc_update_iter=1000,mean_change_tol=.0001,learning_offset=30)
 
+    # for NMF:
     # alpha is how much to regularize
     # l1 ratio is how much alpha to allocate to l1 vs l2 regularization (microblogs paper did both so we do too)
     # tol is how small violation must be for NMF to stop iterating.
@@ -73,19 +75,19 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # Verbose prints out how close to convergence we are after each iteration
     # When violation is less than .0001 by default, NMF is finished (set to .001 now)
 
-    text_nmf_W = nmf.fit_transform(text_tf_idf) # NMF's .transform() returns W by
+    text_topic_model_W = topic_model.fit_transform(text_tf_idf) # NMF's .transform() returns W by
     # default, but we can get H as follows:
-    text_nmf_H = nmf.components_
-    print("NMF Components:")
-    print(text_nmf_W[0]) # topic memberships of tweet 0
-    print(len(text_nmf_H[0]))
-    print(text_nmf_H[0]) # this is relative word frequencies within topic 0.
+    text_topic_model_H = topic_model.components_
+    print("Topic Model Components:")
+    print(text_topic_model_W[0]) # topic memberships of tweet 0
+    print(len(text_topic_model_H[0]))
+    print(text_topic_model_H[0]) # this is relative word frequencies within topic 0.
     # Maybe. We might need to to transpose this...
 
-    text_nmf_WH = (text_nmf_W,text_nmf_H)
+    text_topic_model_WH = (text_topic_model_W,text_topic_model_H)
 
-    pickle.dump(text_nmf_WH, open('LDA_better_topics_WH.pkl','wb'), protocol=4) # Save it to
-    pickle.dump(nmf, open('LDA_better.pkl','wb'), protocol=4)
+    pickle.dump(text_topic_model_WH, open('LDA_topics_WH.pkl','wb'), protocol=4) # Save it to
+    pickle.dump(topic_model, open('LDA.pkl','wb'), protocol=4)
     # disk so we don't have to keep recalculating it later
 
     print("\n--- Completed in %s seconds! ---" % (time.time() - start_time))
