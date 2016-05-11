@@ -62,7 +62,7 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # will always be 0
 
     # These two are basically interchangable: (Go take a nap while they run...)
-    # nmf = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
+    # topic_model = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
     topic_model = LatentDirichletAllocation(n_topics=1000,n_jobs=-1,doc_topic_prior=50/1000.0, topic_word_prior=.1, verbose=100,batch_size=int(len(raw_text)/10),max_doc_update_iter=1000,mean_change_tol=.0001,learning_offset=30)
 
     # for LDA:
