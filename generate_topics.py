@@ -8,7 +8,7 @@ print(H.shape)
 print(names[:100])
 print(H[:20,:20])
 
-sorted = [list(names[np.argsort(x)[-10:]][::-1]) for x in H]
+sorted = [list(names[np.argsort(x)[-10:]][::-1]) for x in H] # get the indices of the 10 highest values in each topic in H, then get the corresponding words for these values
 for s in sorted:
     print(s)
 

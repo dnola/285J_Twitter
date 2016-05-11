@@ -34,8 +34,8 @@ for f in glob.glob('Raw Data/*.tsv'):
 print(len(raw_data))
 
 # Don't worry if this line gives you warnings. Pandas is whiny
-raw_data[['latitude','longitude']] = raw_data[['latitude','longitude']].apply(pandas.to_numeric, errors='coerce')
-raw_data=raw_data.dropna()
+raw_data[['latitude','longitude']] = raw_data[['latitude','longitude']].apply(pandas.to_numeric, errors='coerce') # force latitude and longitude to float
+raw_data=raw_data.dropna() # drop any row with an NA in any column
 
 print(len(raw_data))
 

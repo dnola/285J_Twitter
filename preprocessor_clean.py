@@ -16,7 +16,6 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     raw_text = [str(x) for x in raw_text]
     print("Number of Samples:", len(raw_text))
 
-
     clean_text = [" ".join([   # joins a list of words back together with spaces in between them
                                 re.sub(r'\W+', '', # force alphanumeric (after doing @ and # checks)
                                 word.replace('"','').lower()) # force lower case, remove double quotes
@@ -62,9 +61,16 @@ if __name__ == "__main__": # sort of like with MPI, we need this to do multiproc
     # and only spit out the values and their indexes. Its 1D so the first index
     # will always be 0
 
-    # These two are basically interchangable:
+    # These two are basically interchangable: (Go take a nap while they run...)
     # nmf = NMF(n_components=1000,verbose=1,tol=.001,alpha=.1,l1_ratio=.2)
     topic_model = LatentDirichletAllocation(n_topics=1000,n_jobs=-1,doc_topic_prior=50/1000.0, topic_word_prior=.1, verbose=100,batch_size=int(len(raw_text)/10),max_doc_update_iter=1000,mean_change_tol=.0001,learning_offset=30)
+
+    # for LDA:
+    # n_jobs=-1 means run on every logical core
+    # doc_topic prior and topic_word prior are alpha and beta terms respectively
+    # LatentDirichletAllocation runs in online mode by default, just make sure batch_size is small enough to fit in RAM
+    # Learning offset is how much to reduce importance of early batches - higher values mean early batches have less weight (early batches tend to dominate in online training of LDA)
+
 
     # for NMF:
     # alpha is how much to regularize
